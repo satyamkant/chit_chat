@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  
     package="com.example.chit_chat">
    <application
         android:label="chit_chat"
