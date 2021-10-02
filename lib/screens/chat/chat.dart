@@ -23,8 +23,31 @@ class _ChatScreenState extends State<ChatScreen> {
   final _formkey = GlobalKey<FormState>();
   String? messages;
 
+  Stream? chatMessageStream;
+
+  Widget ChatMessageList() {
+    return StreamBuilder(
+      stream: chatMessageStream,
+      builder: (context, snapshot) {
+        return ListView.builder(
+            itemCount: snapshot.data == null
+                ? 1
+                : (snapshot.data! as QuerySnapshot).docs.length,
+            itemBuilder: (context, index) {
+              return chattile(
+                  message: snapshot.data == null
+                      ? 'no data'
+                      : (snapshot.data! as QuerySnapshot).docs[index]
+                          ["message"]);
+            });
+      },
+    );
+  }
+
   @override
   void initState() {
+    chatMessageStream = chatDatabaseService.getchatmessage(widget.chatid!);
+    //print(chatmessagestream.toString());
     super.initState();
   }
 
@@ -64,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Container(
         child: Stack(
           children: [
-            //Chatlist(),
+            ChatMessageList(),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               alignment: Alignment.bottomCenter,
@@ -137,6 +160,25 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class chattile extends StatelessWidget {
+  //const chattile({Key? key}) : super(key: key);
+  final String? message;
+  chattile({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text(
+        message ?? 'no data!',
+        style: TextStyle(
+          fontSize: 15,
+          color: Colors.black,
         ),
       ),
     );

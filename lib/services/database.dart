@@ -36,8 +36,8 @@ class ChatDatabaseService {
     }
   }
 
-  getchatmessage(String chatid) async {
-    return await FirebaseFirestore.instance
+  getchatmessage(String chatid) {
+    return FirebaseFirestore.instance
         .collection('chatroom')
         .doc(chatid)
         .collection('chats')
