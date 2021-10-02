@@ -26,10 +26,11 @@ class ChatDatabaseService {
 
   Future createchatmessage(String chatid, String sendby, String message) async {
     try {
-      return await chatcollection
-          .doc(chatid)
-          .collection('chats')
-          .add({'message': message, 'sendby': sendby});
+      return await chatcollection.doc(chatid).collection('chats').add({
+        'message': message,
+        'sendby': sendby,
+        'time': DateTime.now().millisecondsSinceEpoch,
+      });
     } catch (error) {
       print(error.toString());
       return null;
@@ -41,6 +42,7 @@ class ChatDatabaseService {
         .collection('chatroom')
         .doc(chatid)
         .collection('chats')
+        .orderBy('time', descending: false)
         .snapshots();
   }
 

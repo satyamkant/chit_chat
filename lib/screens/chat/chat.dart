@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:chit_chat/custom/chatinfo.dart';
 import 'package:chit_chat/screens/chat/chatlist.dart';
 import 'package:chit_chat/services/database.dart';
@@ -35,10 +37,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 : (snapshot.data! as QuerySnapshot).docs.length,
             itemBuilder: (context, index) {
               return chattile(
-                  message: snapshot.data == null
-                      ? 'no data'
-                      : (snapshot.data! as QuerySnapshot).docs[index]
-                          ["message"]);
+                message: snapshot.data == null
+                    ? 'No messages!!!'
+                    : (snapshot.data! as QuerySnapshot).docs[index]["message"],
+                sentby: snapshot.data == null
+                    ? 'no user'
+                    : (snapshot.data! as QuerySnapshot).docs[index]["sendby"],
+                currusr: widget.currusername,
+              );
             });
       },
     );
@@ -87,7 +93,9 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Container(
         child: Stack(
           children: [
-            ChatMessageList(),
+            Container(
+                height: MediaQuery.of(context).size.height - 160,
+                child: ChatMessageList()),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               alignment: Alignment.bottomCenter,
@@ -169,16 +177,38 @@ class _ChatScreenState extends State<ChatScreen> {
 class chattile extends StatelessWidget {
   //const chattile({Key? key}) : super(key: key);
   final String? message;
-  chattile({required this.message});
+  final String? sentby;
+  final String? currusr;
+  chattile(
+      {required this.message, required this.sentby, required this.currusr});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(
-        message ?? 'no data!',
-        style: TextStyle(
-          fontSize: 15,
-          color: Colors.black,
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(top: 10),
+      alignment: sentby == null
+          ? Alignment.center
+          : sentby == currusr
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+      child: Container(
+        width: MediaQuery.of(context).size.width - 150,
+        child: Card(
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          margin: EdgeInsets.fromLTRB(10, 3, 10, 0),
+          child: ListTile(
+            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+            title: Text(message ?? ''),
+            subtitle: Text(sentby == null
+                ? ''
+                : sentby == currusr
+                    ? 'sent by you'
+                    : 'sent by $sentby'),
+          ),
         ),
       ),
     );
