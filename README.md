@@ -1,5 +1,6 @@
 # chitchat
-CloudBurst, an application used to get weather information.
+Chitchat, a messenging similar to other messengers, people can send and receive messages.
+To send and receive messages you first need to create an account for the app!!.
 
 ## Getting Started
   * run: git clone https://github.com/satyamkant/CloudBurst in git bash cmd
