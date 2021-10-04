@@ -1,5 +1,5 @@
 # chitchat
-Chitchat, a messenging app similar to other messengers, people can send and receive messages.
+Chitchat, a messaging app similar to other messengers, people can send and receive messages.
 To send and receive messages you first need to create an account for the app!!.
 
 ## Getting Started
