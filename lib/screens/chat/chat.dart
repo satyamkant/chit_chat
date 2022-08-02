@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:chit_chat/custom/chatinfo.dart';
 import 'package:chit_chat/screens/chat/chatlist.dart';
 import 'package:chit_chat/services/database.dart';

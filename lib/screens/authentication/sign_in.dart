@@ -235,6 +235,16 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                        child: const Text(
+                          'Copyright: Satyamkant2805@gmail.com',
+                          style: TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 15,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
